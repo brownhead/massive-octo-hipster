@@ -1,0 +1,12 @@
+Vagrant.configure("2") do |config|
+    config.vm.network "forwarded_port", guest: 80, host: 9191, host_ip: "127.0.0.1"
+
+    config.vm.define "main" do |main|
+        main.vm.box = "ubuntu/vivid64"
+        main.vm.synced_folder "../", "/opt/app/repo/"
+    end
+
+    config.vm.provision "shell" do |shell|
+        shell.path = "install-webapp.sh"
+    end
+end
